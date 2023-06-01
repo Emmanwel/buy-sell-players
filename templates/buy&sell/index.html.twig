@@ -1,0 +1,62 @@
+{% extends "./base.html.twig" %}
+
+{% block body %}
+	<div class="w-4/5 m-auto text-center">
+		<div class="py-12 border-b border-gray-200">
+			<h1 class="text-6xl pt-12 pb-8">
+				Total Players are
+				{{ players|length }}
+
+			</h1>
+			<span class="font-light text-gray-500 italic">
+				Buy and Sell Players
+			</span>
+		</div>
+	</div>
+
+
+	<div class="container mx-auto grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-20 py-15">
+		<div class="flex justify-end px-4 pt-4"></div>
+		{# {% for team in teams %} #}
+
+		{% for team in pagination %}
+
+			<div class="flex flex-col items-center pb-10  bg-white border border-gray-200 rounded-lg shadow">
+
+				<h1 class="!justify-end uppercase border border-gray-500 text-lg py-2 px-4 rounded transition-all bg-gray-700 text-white hover:bg-white hover:text-gray-800">Money Balance :
+					{{ team.getReleaseYear }}£
+
+
+				</h1>
+
+				<img src="{{ team.getTeamLogo }}" alt="{{ team.getTeamName }}" class="w-24 h-24 mb-3 rounded-full shadow-lg "/>
+				<span class="text-sm text-gray-500 dark:text-gray-400">{{ team.getTeamName }}</span>
+
+
+				{% for player in team.getPlayers() %}
+
+					<h5 class="mt-3 text-2xl font-medium text-gray-900 dark:text-white ">
+						{{ player.getPlayerName }}
+					</h5>
+
+					<div class="flex mt-0.5 space-x-3 md:mt-1.5">
+						<a href="/buy&sell/{{ player.getId }}" class="uppercase inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Buy</a>
+						<a href="/buy&sell/{{ player.getId }}" class="uppercase inline-flex items-center px-4 py-2 text-sm font-medium text-center text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-700 dark:focus:ring-gray-700">Sell</a>
+
+					</div>
+				{% endfor %}
+			</div>
+		{% endfor %}
+	</div>
+
+	<div class="flex flex-col items-center">
+
+		<div class="container mx-auto mt-8 mb-4 flex justify-center bg-black text-white w-48 h-10 items-center text-lg border rounded-full shadow-cyan-500/50">
+			{{ knp_pagination_render(pagination) }}
+		</div>
+	</div>
+
+
+{% endblock %}
+
+{# End #}

@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Sell Player</h1>
+
+    {{ form_start(form) }}
+        {{ form_row(form.player) }}
+        {{ form_row(form.team) }}
+
+        {{ form_row(form.submit) }}
+    {{ form_end(form) }}
+{% endblock %}

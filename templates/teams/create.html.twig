@@ -1,0 +1,119 @@
+{# {% extends 'base.html.twig' %}
+
+{% block body %}
+	<div class="w-4/5 m-auto pt-40">
+		<h1 class="text-6xl text-center pb-12">
+			Create Team
+		</h1>
+
+		{{ form_start(form) }}
+
+
+		{{ form_row(form.players.vars.prototype.player_name) }}
+
+		<div id="player-fields" class="mt-4 text-black bg-slate-200 mb-10 block border-b-2 w-50% h-auto text-4xl outline-none">
+			{{ form_errors(form.players) }}
+
+			{% for playerForm in form.players %}
+				<div class="player-form mb-3 text-black bg-slate-200 mt-10 block border-b-2 w-50% h-auto text-4xl outline-none">
+					{{ form_label(playerForm.player_name) }}
+					<br/><br/>
+					{{ form_widget(playerForm.player_name, { 'full_name': playerForm.player_name.vars.full_name|replace({'players': 'players[__name__]'}) }) }}
+				</div>
+			{% endfor %}
+
+			<button type="button" id="add-player" class="mt-4 mb-5 d-flex justify-between">Add Player +</button>
+		</div>
+
+		<button type="submit" class="uppercase mb-0 bg-blue-500 text-gray-100 text-lg font-extrabold py-4 px-8 rounded-3xl">
+			Submit
+		</button>
+
+		{{ form_end(form) }}
+	</div>
+
+	
+{% endblock %} #}
+
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+	<div class="w-full m-auto pt-40">
+
+		<h1 class="text-6xl text-center pb-12">Create Team</h1>
+
+
+		<div class="grid grid-cols-2 gap-4 content-stretch">
+
+			<div class="ml-12 p-5">
+
+				{{ form_start(form) }}
+				{{ form_row(form.team_name) }}
+				{{ form_row(form.league) }}
+				{{ form_row(form.releaseYear) }}
+				{{ form_row(form.team_logo) }}
+
+			</div>
+
+			<div>
+
+
+				<h2 class="mb-4 text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Team Players</h2>
+				<div class="player-form mb-3 p-3 text-black bg-slate-200 mt-10 block border text-2xl outline-none justify-center text-center ">
+
+
+					<ul id="players-list" class="w-2/3" data-index=" {{ form.players|length }} " data-prototype=" {{ form_widget(form.players.vars.prototype)|e('html_attr') }} ">
+						{% for playerForm in form.players %}
+							{% if playerForm.vars.data %}
+								<li class="player-item">
+									{{ form_row(playerForm.player_name) }}
+
+									<button type="button" class="remove-player-btn">Remove</button>
+								</li>
+							{% endif %}
+						{% endfor %}
+					</ul>
+				</div>
+
+				<button type="button" class="inline-flex items-center justify-center px-2 py-2 text-base font-medium text-center text-white bg-blue-400 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300" id="add-player-btn">Add Player +</button>
+				<button type="submit" class="uppercase mt-20 bg-blue-500 text-gray-100 text-md font-extrabold py-4 px-8 rounded-2xl flex justify-center">
+					Create Team</button>
+
+				{{ form_end(form) }}
+
+			</div>
+		</div>
+
+
+		<script>
+			document.addEventListener('DOMContentLoaded', function () {
+var playersList = document.getElementById('players-list');
+var addPlayerBtn = document.getElementById('add-player-btn');
+
+addPlayerBtn.addEventListener('click', function () {
+var index = playersList.dataset.index;
+var prototype = playersList.dataset.prototype.replace(/__player_name__/g, index);
+playersList.dataset.index ++;
+var newPlayer = document.createElement('li');
+
+
+newPlayer.innerHTML = '<div class="player-item mb-6 w-full border border-gray-300 text-gray-900">' + prototype + '</div>';
+
+
+playersList.appendChild(newPlayer);
+});
+
+playersList.addEventListener('click', function (event) {
+if (event.target.classList.contains('remove-player-btn')) {
+event.target.closest('.player-item').remove();
+}
+});
+});
+		</script>
+
+	</div>
+{% endblock %}
+
+{# newPlayer.innerHTML = prototype; #}

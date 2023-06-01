@@ -1,0 +1,98 @@
+{% extends './base.html.twig' %}
+
+{% block body %}
+	<div class="sm:w-3/5 w-4/5 mx-auto">
+		<h1 class="pt-20 sm:text-5xl md:text-7xl text-4xl font-bold text-center">{{ player.getPlayerName }}</h1>
+
+		<div class="py-10 !text-center">
+			<div class="inline-block sm:pt-1">
+				<h2 class="font-bold underline decoration-4 text-2xl text-blue-600/100 uppercase">Let us Trade</h2>
+			</div>
+		</div>
+
+		<div class="grid grid-rows-3 grid-flow-col gap-4">
+			<div class="row-span-3">
+				<img src="{{ player.team.getTeamLogo }}" class="h-60 w-60 rounded-full object-cover shadow-xl border" alt="{{ player.getPlayerName }}"/>
+
+
+				<h2 disabled class="bg-green-500 font-bold py-1 px-2 rounded  hover:bg-green-800 text-white">All Rights Are Reserved!!
+				</h2>
+
+
+			</div>
+			<div class="row-span-2 col-span-3 bg-slate-300 text-black font-bold">
+				<h1 class="sm:text-2xl md:text-2xl text-2xl font-bold text-center">Sell and Buy</h1>
+				<h1 class="ml-4">Money Balance:
+					{{ player.team.getReleaseYear }}</h1>
+
+				<div class="flex items-center mt-5 justify-center mx-2 gap-10">
+					<div class="text-center">
+						<label for="input-group-1" class="mb-2 text-sm font-medium text-gray-900 dark:text-white">Player Team</label>
+						<div class="flex w-auto mb-6 mt-5">
+							<span class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-r-0 border-gray-300 rounded-l-md"><img src="{{ player.team.getTeamLogo }}" class="h-10 w-10 rounded-full object-cover shadow-xl border" alt="{{ player.getPlayerName }}"/></span>
+							<input type="text" value="{{ player.team.getTeamName }}" disabled id="website-admin" class="w-40 rounded-none rounded-r-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block min-w-0 text-sm border-gray-300 p-2.5" placeholder="Parent Team"/>
+						</div>
+					</div>
+					<div class="ml-3">
+						<div>
+							<input type="hidden" id="hidden-input"/>
+							<label for="team-select" class="!mb-10 text-sm font-medium text-gray-900 !text-left">Transfer To</label>
+							<div class="flex relative z-0 w-full mb-6 mt-5">
+								<select id="team-select" required class="w-40 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5">
+									<option selected>Choose a Team</option>
+									{% for team in teams %}
+										{% if team.getId != player.getTeam.getId %}
+											<option value="{{ team.getId }}">{{ team.getTeamName }}</option>
+										{% endif %}
+									{% endfor %}
+								</select>
+							</div>
+						</div>
+
+						<form class="mt-5" method="POST" action="{{ path('transfer_player') }}">
+							<input type="hidden" name="playerId" value="{{ player.getId }}"/>
+							<input type="hidden" id="teamId" name="teamId" value=""/>
+							<label for="transferAmount">Transfer Amount:</label>
+							<input type="number" id="transferAmount" name="transferAmount" required step="0.01" class="w-40 rounded-none rounded-r-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block min-w-0 text-sm border-gray-300 p-2.5"/>
+							<button type="button" id="transfer-btn" class="uppercase mt-20 bg-blue-500 text-gray-100 text-md font-extrabold py-4 px-5 rounded-xl">Transfer</button>
+						</form>
+
+						<div id="error-message" class="text-red-500 mt-2"></div>
+						<div id="success-message" class="text-green-500 mt-2"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		// Handle transfer button click event
+document.getElementById('transfer-btn').addEventListener('click', function (event) {
+event.preventDefault();
+var playerId = {{ player.getId }};
+var selectedTeamId = document.getElementById('team-select').value;
+var transferAmount = parseFloat(document.getElementById('transferAmount').value);
+document.getElementById('teamId').value = selectedTeamId;
+
+// Perform validation
+if (selectedTeamId === "") {
+alert("Please select a team to transfer to.");
+return;
+}
+
+if (isNaN(transferAmount) || transferAmount <= 0) {
+alert("Please enter a valid transfer amount.");
+return;
+}
+
+// Make AJAX request to perform calculations and update database
+var xhr = new XMLHttpRequest();
+xhr.open('POST', '/transfer');
+xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+xhr.onload = function () { // Refresh the page
+location.reload();
+};
+xhr.send('playerId=' + playerId + '&teamId=' + selectedTeamId + '&transferAmount=' + transferAmount);
+});
+	</script>
+{% endblock %}

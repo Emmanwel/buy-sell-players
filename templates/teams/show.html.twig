@@ -1,0 +1,57 @@
+{% extends "./base.html.twig" %}
+
+{% block body %}
+	<div class="sm:w-3/5 w-4/5 mx-auto ">
+		<h1 class="pt-20 sm:text-5xl md:text-7xl text-4xl font-bold text-center">
+
+			{{ team.getTeamName }}
+		</h1>
+
+		<div class="py-10 text-center">
+			<div class="inline-block sm:pt-1">
+				<h2 class="font-bold">
+					Created by: Mukhebi
+				</h2>
+
+				<p class="text-sm text-gray-600">
+					Country:
+					{{ team.getLeague }}
+				</p>
+			</div>
+		</div>
+
+		<div class="grid grid-rows-3 grid-flow-col gap-4">
+
+			<div class="row-span-3">
+
+				<img src="{{ team.getTeamLogo }}" class="h-60 w-60 rounded-full object-cover shadow-xl border" alt="   {{ team.getTeamName }}"/>
+
+				<p class="text-xl py-6">
+
+					Country:
+					{{ team.getLeague }}
+				</p>
+
+				<a href="/teams/edit/{{ team.id }}" class="bg-green-500 font-bold py-2 px-4 rounded transition-all hover:bg-green-300 justify-center">
+					Edit Team
+				</a>
+
+			</div>
+			<div class="row-span-2 col-span-2 bg-slate-300 text-black font-bold">
+				<h1 class="sm:text-2xl md:text-2xl text-2xl font-bold text-center">
+					{{ team.getTeamName }}
+					Players
+				</h1>
+				{% for player in team.players %}
+					<h2 class="text-gray-700 font-bold text-3xl py-2 ml-4">
+
+						{{ loop.index }}:
+						{{ player.getPlayerName }}
+					</h2>
+				{% endfor %}
+
+			</div>
+		</div>
+
+	</div>
+{% endblock %}

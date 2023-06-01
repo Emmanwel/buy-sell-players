@@ -1,0 +1,64 @@
+{% extends "./base.html.twig" %}
+
+{% block body %}
+    <div class="w-4/5 m-auto text-center">
+        <div class="py-12 border-b border-gray-200">
+            <h1 class="text-6xl pt-12 pb-8">
+                 The Page Has ({{ pagination|length }}) Teams
+            </h1>   
+
+            <span class="font-light text-gray-500 italic">
+                Teams and There Players
+            </span>
+        </div>
+    </div>
+
+    <div class="mx-auto w-4/5 my-8">
+        <a 
+            href="/teams/create" 
+            class="uppercase border border-gray-500 text-lg py-4 px-6 rounded transition-all bg-gray-800 text-white hover:bg-white hover:text-gray-800">
+            Create New Team
+        </a>
+    </div>
+    <div class="md:grid lg:grid-cols-3 gap-20 w-4/5 mx-auto py-15 ">
+        <!-- Pagination for the Teams  6 teams per page-->   
+
+          {% for team in pagination %}
+              <div class="bg-white shadow-lg rounded-lg p-8 text-center">
+                <img
+                    src="{{ team.getTeamLogo }}"
+                   alt="{{ team.getTeamName }}"
+                   class="h-20 w-20 rounded-full object-cover"
+                /> 
+
+                <h2 class="text-gray-700 font-bold text-3xl py-2">
+                    {{ team.getTeamName }}
+                
+                </h2>                
+
+                <span class="text-gray-500">
+                     <span class="italic text-sm text-gray-800"> Money Balance :   {{ team.getReleaseYear }}
+
+                </span>
+
+                <p class="text-base text-gray-700 pt-4 pb-10 leading-8 font-light">
+                   Country: {{ team.getLeague }}               
+                
+                </p>
+
+                <a href="/teams/{{ team.id }}" class="uppercase border border-gray-500 text-gray-600 text-lg py-4 px-12 rounded transition-all hover:bg-gray-800 hover:text-white">
+                   View Players
+                </a>                      
+            </div>        
+        {% endfor %}
+
+    </div>
+
+ <div class="flex flex-col items-center">
+  
+     <div class="container mx-auto mt-8 mb-4 flex justify-center bg-black text-white w-48 h-10 items-center text-lg border rounded-full shadow-cyan-500/50">
+           {{ knp_pagination_render(pagination) }}
+       </div>
+</div>
+  
+{% endblock %}

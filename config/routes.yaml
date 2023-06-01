@@ -1,0 +1,38 @@
+# controllers:
+#     resource:
+#         path: ../src/Controller/
+#         namespace: App\Controller
+#     type: attribute
+
+
+# app_teams:
+#     path: /teams
+#     controller: App\Controller\TeamController::index
+
+
+controllers:
+    resource: ../src/Controller/
+    type: annotation
+
+kernel:
+    resource: ../src/Kernel.php
+    type: annotation
+
+teams:
+    path: /teams
+    controller: App\Controller\TeamsController::index
+
+
+buy&sell:
+    path: /buy&sell
+    controller: App\Controller\BuySellController::index
+
+transfer:
+    path: /transfer
+    controller: App\Controller\BuySellController::transferPlayer
+
+transfer_player:
+    path: /transfer
+    controller: App\Controller\BuySellController::transferPlayer
+    methods: [POST]
+
