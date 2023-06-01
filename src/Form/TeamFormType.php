@@ -50,8 +50,9 @@ class TeamFormType extends AbstractType
                     'attr' => array(
                         'class' => 'mb-8 block w-10% text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50  focus:outline-none '
                     ),
-                    'required' => true,
-                    'mapped' => false
+
+                    'mapped' => false,
+                    'required' => false,
                 ]
             )
 
