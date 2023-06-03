@@ -36,3 +36,8 @@ transfer_player:
     controller: App\Controller\BuySellController::transferPlayer
     methods: [POST]
 
+add_players_to_team:
+    path: '/teams/{teamId}/add-players'
+    controller: App\Controller\TeamsController::addPlayersToTeam
+    methods: [GET, POST]
+

@@ -52,7 +52,7 @@ class TeamFormType extends AbstractType
                     ),
 
                     'mapped' => false,
-                    'required' => false,
+                    'required' => true,
                 ]
             )
 
@@ -62,7 +62,7 @@ class TeamFormType extends AbstractType
                 'entry_type' => PlayerFormType::class,
 
                 'attr' => array(
-                    'class' => 'player-name-field text-black bg-slate-200 mb-10 mt-10 block border-b-2 w-2/3 h-auto text-4xl outline-none',
+                    'class' => 'player-index text-black bg-slate-200 mb-10 mt-10 block border-b-2 w-2/3 h-auto text-4xl outline-none',
 
                 ),
 
@@ -71,6 +71,9 @@ class TeamFormType extends AbstractType
                 'prototype' => true,
                 'prototype_name' => '__player_name__',
                 'by_reference' => false,
+                // 'label' => false,
+
+
 
             ]);
     }

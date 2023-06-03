@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<h1>Add Players to
+	</h1>
+
+	<div class="mt-40 flex justify-center w-full h-auto">
+
+
+		{{ form_start(form) }}
+
+
+		<div id="players-container">
+			{% for playerForm in form.players %}
+				<div class="player flex bg-slate-50 text-black m-3 gap-6 mb-6 ">
+
+
+					{{ form_row(playerForm.player_name, {
+				                'attr': {
+				'class': 'form-control class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Player Name" ',
+				
+				                    'data-player-count': loop.index0
+				                }
+				            }) }}
+
+					<button class="remove-player text-red rounded-full ">Remove player</button>
+				</div>
+			{% endfor %}
+		</div>
+		<div class="mt-10 flex justify-evenly">
+
+
+			<button type="button" id="add-player-btn" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center ">Add Player More +</button>
+
+
+			<button type="submit" class="btn btn-primary text-white  justify-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Submit Players</button>
+
+
+		</div>
+
+
+	</div>
+
+
+	{{ form_end(form) }}
+
+
+	<script>
+		$(document).ready(function () {
+let playerCount = {{ form.players|length }};
+
+$('#add-player-btn').click(function () {
+let playerHtml = `
+				                <div class="player flex w-full">
+				                    <input type="text" name="team[players][${playerCount}][player_name]"
+				                           id="team_players_${playerCount}_player_name"
+				data-player-count="${playerCount}"class=" bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 m-2" placeholder="Player Name" "/>
+				
+				                    <button class="remove-player text-red rounded-full">Remove player</button>
+				                </div>
+				            `;
+$('#players-container').append(playerHtml);
+playerCount++;
+});
+
+$('#players-container').on('click', '.remove-player', function () {
+$(this).parent('.player').remove();
+});
+});
+	</script>
+
+
+{% endblock %}

@@ -8,15 +8,19 @@
 		</h1>
 
 		<div class="py-10 text-center">
-			<div class="inline-block sm:pt-1">
-				<h2 class="font-bold">
-					Created by: Mukhebi
-				</h2>
+			<div class="sm:pt-1">
 
-				<p class="text-sm text-gray-600">
-					Country:
-					{{ team.getLeague }}
-				</p>
+
+				<div class="flex justify-between ">
+
+					<h2 class="text-lg text-gray-600">
+						Country:
+						{{ team.getLeague }}
+					</h2>
+
+					<a href="{{ path('add_players_to_team', { 'teamId': team.id }) }}" class=" text-lg  bg-red-500 font-bold py-2 px-4 rounded transition-all hover:bg-blue-300 justify-center">Add Players +</a>
+
+				</div>
 			</div>
 		</div>
 
@@ -32,10 +36,15 @@
 					{{ team.getLeague }}
 				</p>
 
-				<a href="/teams/edit/{{ team.id }}" class="bg-green-500 font-bold py-2 px-4 rounded transition-all hover:bg-green-300 justify-center">
-					Edit Team
-				</a>
 
+				<div class="flex justify-between">
+
+					<a href="/teams/edit/{{ team.id }}" class="bg-green-500 font-bold py-2 px-4 rounded transition-all hover:bg-green-300 justify-center">
+						Edit Team
+					</a>
+					<a href="{{ path('add_players_to_team', { 'teamId': team.id }) }}" class="bg-green-500 font-bold py-2 px-4 rounded transition-all hover:bg-green-300 justify-center">Add Players +</a>
+
+				</div>
 			</div>
 			<div class="row-span-2 col-span-2 bg-slate-300 text-black font-bold">
 				<h1 class="sm:text-2xl md:text-2xl text-2xl font-bold text-center">
@@ -49,6 +58,10 @@
 						{{ player.getPlayerName }}
 					</h2>
 				{% endfor %}
+
+				<div>
+					<button type="submit">Add More</button>
+				</div>
 
 			</div>
 		</div>
